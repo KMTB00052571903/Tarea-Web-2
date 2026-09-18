@@ -1,23 +1,24 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Patch,
-  Post,
-  Query,
-} from "@nestjs/common";
+import { Body, Controller, Get, Param, Patch, Post } from "@nestjs/common";
 import { CreateOrderDto } from "./dto/create-order.dto";
 import { OrdersService } from "./orders.service";
 import { UpdateOrderDto } from "./dto/update-order.dto";
+import { OrdersSummaryService } from "./orders-summary.service";
 
 @Controller("orders")
 export class OrdersController {
-  constructor(private readonly ordersService: OrdersService) {}
+  constructor(
+    private readonly ordersService: OrdersService,
+    private readonly ordersSummaryService: OrdersSummaryService,
+  ) {}
 
   @Get()
   findAll() {
     return this.ordersService.findAll();
+  }
+
+  @Get("summary")
+  getSummary() {
+    return this.ordersSummaryService.getSummary();
   }
 
   @Patch(":id")
